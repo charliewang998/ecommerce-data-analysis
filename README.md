@@ -1,4 +1,4 @@
-Olist Brazilian E-Commerce Analysis
+# Olist Brazilian E-Commerce Analysis
 
 ## Project Overview
 
@@ -98,3 +98,4 @@ ecommerce-data-analysis/
 - [ ] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
 - [ ] Add final business findings and recommendations
+
