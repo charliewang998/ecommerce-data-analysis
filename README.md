@@ -1,102 +1,100 @@
-# E-commerce Sales & Customer Insights Analysis
+Olist Brazilian E-Commerce Analysis
 
 ## Project Overview
 
-This project analyzes a large synthetic e-commerce relational dataset using SQL, Python, and Power BI. The objective is to simulate an end-to-end data-analysis workflow: assess data quality, define reliable metrics, identify sales and customer patterns, and communicate findings through a business-facing dashboard and report.
+This project analyzes the Brazilian E-Commerce Public Dataset provided by Olist. The dataset contains anonymized commercial order data from Brazilian marketplaces and covers orders recorded between September 2016 and October 2018.
 
-The analysis is designed for an e-commerce operations or management team seeking a clear view of sales performance, customer behavior, product performance, and data limitations that may affect decision-making.
+The project demonstrates an end-to-end junior data-analysis workflow using SQL, Python, and Power BI. The analysis begins with data-quality validation and will then examine sales performance, customer behavior, product performance, delivery operations, and customer reviews.
 
 ## Business Questions
 
-- What are the company's baseline sales KPIs?
-- How do revenue, order volume, and average order value change over time?
-- How is revenue distributed across customer countries and payment methods?
-- Which customers and products contribute the most value?
-- What data-quality limitations must be considered before interpreting the results?
+The project will address the following questions:
+
+1. What are the main order and payment KPIs?
+2. How do order volume and recorded payment value change over time?
+3. Which product categories contribute the most sales value?
+4. Where are customers and sellers located?
+5. How frequently do customers make repeat purchases?
+6. How do delivery performance and review scores relate to customer experience?
 
 ## Dataset
 
-Source: [Synthetic E-Commerce Relational Dataset on Kaggle](https://www.kaggle.com/datasets/naelaqel/synthetic-e-commerce-relational-dataset)
+**Source:** [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
 
-The database contains five related tables:
+The dataset contains nine related CSV files:
 
 | Table | Rows | Description |
 |---|---:|---|
-| `customers` | 2,000,000 | Customer profiles and signup information |
-| `orders` | 8,000,000 | Order dates, amounts, payment methods, and destinations |
-| `order_items` | 20,000,000 | Products, quantities, and prices within orders |
-| `products` | 20,000 | Product details, categories, prices, brands, and stock |
-| `product_reviews` | 4,000,000 | Customer ratings and review information |
+| `olist_customers_dataset` | 99,441 | Customer identifiers and customer locations |
+| `olist_geolocation_dataset` | 1,000,163 | Brazilian postal-code coordinates |
+| `olist_order_items_dataset` | 112,650 | Products, sellers, prices, and freight values within orders |
+| `olist_order_payments_dataset` | 103,886 | Payment methods, installments, and payment values |
+| `olist_order_reviews_dataset` | 99,224 | Review scores, comments, and review dates |
+| `olist_orders_dataset` | 99,441 | Order status and purchase, approval, delivery, and estimated dates |
+| `olist_products_dataset` | 32,951 | Product categories and product attributes |
+| `olist_sellers_dataset` | 3,095 | Seller identifiers and seller locations |
+| `product_category_name_translation` | 71 | Portuguese-to-English product-category translations |
 
-> The dataset is synthetically generated and does not represent a real company or real customers.
+The observed order period is **2016-09-04 to 2018-10-17**. The first and last calendar months are incomplete and should not be compared directly with complete months.
 
 ## Tools
 
-- **MySQL / DBeaver:** data-quality auditing and business analysis
-- **Python / Pandas:** planned data preparation and exploratory analysis
+- **MySQL / DBeaver:** data-quality checks and business analysis
+- **Python / Pandas:** planned exploratory analysis and validation
 - **Power BI:** planned data model and interactive dashboard
 - **GitHub:** project documentation and reproducible analysis files
 
-## Project Files
-
-- [`sql/00_data_quality_audit.sql`](sql/00_data_quality_audit.sql) — data-quality and business-rule validation
-- [`sql/01_sales_overview.sql`](sql/01_sales_overview.sql) — baseline sales, monthly trends, customer-country analysis, and payment-method analysis
-
 ## Data Quality Assessment
 
-A structured audit was completed before interpreting the business metrics. The checks covered primary-key uniqueness, missing values, referential integrity, numerical validity, date consistency, categorical consistency, and reconciliation between order totals and order-item totals.
+The following checks have been completed before beginning the business analysis:
 
-### Key Findings
+- All nine CSV files were imported successfully, and their row counts match the source files.
+- Order, customer, product, and seller IDs contain no duplicates.
+- The composite keys for order items, payments, and reviews contain no duplicate combinations.
+- Critical order identifiers, order statuses, and purchase timestamps contain no missing values.
+- Product prices and freight values contain no missing or negative values.
+- Payment values and installment fields contain no missing values.
+- Review scores contain no missing values and fall within the expected range of 1 to 5.
+- All order-item, payment, and review records match an order.
+- All order-item records match a product and a seller.
 
-- No duplicate primary keys were identified across the five tables.
-- No missing values were found in the audited key fields.
-- No invalid negative amounts, prices, quantities, stock values, or out-of-range ratings were identified.
-- **3,196,732 orders (39.96%) occurred before the corresponding customer signup date.**
-- **655,925 orders (8.20%) had no corresponding order-item records.**
-- For all **7,344,075 orders with item records**, the recorded order totals matched totals recalculated from `quantity × unit_price` within a tolerance of 0.01.
-- `Congo` and `Korea` each contained approximately twice the typical customer count, suggesting that multiple geographic entities may be grouped under ambiguous country labels.
+### Identified Data Limitations
 
-### Analytical Decisions
+- 610 of 32,951 products have no product-category name.
+- 13 products across two categories have no English category translation: `pc_gamer` and `portateis_cozinha_e_preparadores_de_alimentos`.
+- Nine payment rows have a payment value of zero.
+- Two positive credit-card payment rows record zero installments.
+- 775 orders have no item records; 767 of these orders are unavailable or canceled, and none are delivered.
+- One delivered order has no corresponding payment record.
+- 768 orders have no review record, including 646 delivered orders.
+- The review table is not one row per order or one row per review ID; the combination of `review_id` and `order_id` uniquely identifies a review row.
 
-- The original source tables were preserved; uncertain records were not overwritten or deleted.
-- All orders were retained for general order-level sales reporting because `orders.total_amount` remains available.
-- Orders occurring before customer signup will be excluded from analyses requiring valid customer-lifecycle chronology.
-- Orders without item records will be excluded from product-, category-, and basket-level analyses.
-- Congo and Korea will not be presented as proven top-performing markets because the available labels cannot distinguish the underlying geographic entities.
+## Analytical Decisions
 
-## SQL Sales Overview
+- Original source records are retained; uncertain values are not overwritten or deleted without supporting evidence.
+- Orders without item records will not enter product- or category-level analysis.
+- The delivered order without a payment record will remain in order counts but cannot contribute to payment-based metrics.
+- Missing product categories will be labeled `Unknown` during category analysis.
+- Product categories without an English translation will retain their original Portuguese names.
+- Zero-installment records will be excluded from installment-specific calculations or identified as unknown.
+- Missing reviews will not be assigned a score of zero because no review is different from a negative review.
 
-### Baseline KPIs
+## Repository Structure
 
-| Metric | Result |
-|---|---:|
-| Total recorded revenue | 15,084,012,109.31 |
-| Total orders | 8,000,000 |
-| Average order value | 1,885.50 |
-
-The source does not specify a currency, so monetary values are presented without a currency symbol. The dataset also has no order-status field, meaning cancellations and refunds cannot be identified or excluded.
-
-### Monthly Sales Pattern
-
-Monthly revenue was broadly stable across full months. Average order value remained close to 1,885, so most monthly revenue variation was driven by order volume rather than changes in customer spending per order. February consistently showed lower totals because it contains fewer calendar days. The first displayed month contained only 5,474 orders and should be treated as an incomplete period rather than a weak-performing month.
-
-### Customer-Country Pattern
-
-Most country labels contributed approximately 0.40%–0.42% of revenue and had similar average order values. Congo and Korea appeared at the top of the ranking, but each also contained about twice the typical number of customers. Their higher revenue therefore appears to reflect unusual customer allocation or ambiguous labels rather than stronger customer spending.
-
-### Payment-Method Pattern
-
-Credit Card, PayPal, Cash, and Bank Transfer each contributed approximately 25% of both orders and revenue. Average order values were also nearly identical. The differences are too small to support a claim of meaningful customer payment preference and instead reflect the highly uniform nature of the synthetic data.
-
-## Limitations
-
-- The data is synthetic and highly uniform, limiting the realism of market and behavioral conclusions.
-- Currency is not specified.
-- Order status is unavailable, so cancellations and refunds cannot be separated.
-- Approximately 40% of orders violate customer-signup chronology.
-- Approximately 8.20% of orders have no item-level records.
-- Some country labels may combine distinct geographic entities.
+```text
+ecommerce-data-analysis/
+├── README.md
+└── sql/
+    └── 00_data_quality_checks.sql
+```
 
 ## Project Status
 
-Work in progress. The data-quality audit and initial SQL sales overview are complete. Customer analysis, product analysis, Python exploration, and the Power BI dashboard will be added next.
+- [x] Import and validate the Olist source tables
+- [x] Complete the SQL data-quality checks
+- [ ] Complete the SQL sales overview
+- [ ] Complete customer analysis
+- [ ] Complete product and delivery analysis
+- [ ] Perform Python exploratory analysis
+- [ ] Build the Power BI dashboard
+- [ ] Add final business findings and recommendations
