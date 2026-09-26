@@ -79,23 +79,38 @@ The following checks have been completed before beginning the business analysis:
 - Zero-installment records will be excluded from installment-specific calculations or identified as unknown.
 - Missing reviews will not be assigned a score of zero because no review is different from a negative review.
 
+## SQL Sales Overview
+
+The completed-order analysis uses delivered orders for payment-based performance metrics while retaining all order statuses for operational context.
+
+### Key Findings
+
+- The dataset contains 99,440 orders with payment records and a total recorded payment value of 16,008,872.12.
+- There are 96,478 delivered orders; 96,477 have payment records.
+- Delivered orders contribute 15,422,461.77, or approximately 96.34% of all recorded payment value.
+- Completed-order activity increased substantially during 2017 and remained at a higher level during 2018.
+- November 2017 recorded the highest delivered-order volume, with 7,289 orders and a payment value of 1,153,528.05.
+- Credit cards contribute approximately 78.46% of delivered-order payment value, followed by boleto at approximately 17.96%.
+- One-installment credit-card payments are the most common. Higher-value credit-card payments are more frequently associated with longer installment plans, particularly 8 and 10 installments.
+- Installment groups above 10 contain relatively few records and should not be used for strong conclusions.
+
 ## Repository Structure
 
 ```text
 ecommerce-data-analysis/
 ├── README.md
 └── sql/
-    └── 00_data_quality_checks.sql
+    ├── 00_data_quality_checks.sql
+    └── 01_sales_overview.sql
 ```
 
 ## Project Status
 
 - [x] Import and validate the Olist source tables
 - [x] Complete the SQL data-quality checks
-- [ ] Complete the SQL sales overview
+- [x] Complete the SQL sales overview
 - [ ] Complete customer analysis
 - [ ] Complete product and delivery analysis
 - [ ] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
 - [ ] Add final business findings and recommendations
-
