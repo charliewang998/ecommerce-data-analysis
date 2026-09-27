@@ -94,6 +94,22 @@ The completed-order analysis uses delivered orders for payment-based performance
 - One-installment credit-card payments are the most common. Higher-value credit-card payments are more frequently associated with longer installment plans, particularly 8 and 10 installments.
 - Installment groups above 10 contain relatively few records and should not be used for strong conclusions.
 
+## SQL Customer Analysis
+
+Customer behavior is analyzed using `customer_unique_id`, which identifies the same shopper across multiple order-level customer records. Repeat-purchase metrics use delivered orders only.
+
+### Key Findings
+
+- The customer table contains 99,441 order-level customer records representing 96,096 unique customers.
+- A total of 93,358 unique customers completed 96,478 delivered orders.
+- 90,557 customers completed one delivered order, while 2,801 completed more than one.
+- The repeat-customer rate is 3.00%, and customers completed an average of 1.03 delivered orders.
+- Repeat customers generated 5,921 paid delivered orders and 864,357.21 in recorded payment value.
+- Repeat customers averaged 308.59 in cumulative payment value per customer, compared with 160.76 for one-time customers.
+- Repeat customers had a lower average payment value per order: 145.98 compared with 160.76 for one-time customers. Their higher cumulative value therefore came from purchase frequency rather than larger individual orders.
+- São Paulo accounted for approximately 41.98% of delivered orders and 37.42% of delivered-order payment value.
+- Most customers in the top-20 payment-value ranking generated their value from one high-value order rather than repeated purchases.
+
 ## Repository Structure
 
 ```text
@@ -101,7 +117,8 @@ ecommerce-data-analysis/
 ├── README.md
 └── sql/
     ├── 00_data_quality_checks.sql
-    └── 01_sales_overview.sql
+    ├── 01_sales_overview.sql
+    └── 02_customer_analysis.sql
 ```
 
 ## Project Status
@@ -109,7 +126,7 @@ ecommerce-data-analysis/
 - [x] Import and validate the Olist source tables
 - [x] Complete the SQL data-quality checks
 - [x] Complete the SQL sales overview
-- [ ] Complete customer analysis
+- [x] Complete customer analysis
 - [ ] Complete product and delivery analysis
 - [ ] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
