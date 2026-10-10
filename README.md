@@ -4,7 +4,7 @@
 
 This project analyzes the Brazilian E-Commerce Public Dataset provided by Olist. The dataset contains anonymized commercial order data from Brazilian marketplaces and covers orders recorded between September 2016 and October 2018.
 
-The project demonstrates an end-to-end junior data-analysis workflow using SQL, Python, and Power BI. The analysis begins with data-quality validation and will then examine sales performance, customer behavior, product performance, delivery operations, and customer reviews.
+The project demonstrates an end-to-end junior data-analysis workflow using SQL, Python, and Power BI. The analysis begins with data-quality validation and then examines sales performance, customer behavior, product performance, delivery operations, and customer reviews.
 
 ## Business Questions
 
@@ -110,6 +110,22 @@ Customer behavior is analyzed using `customer_unique_id`, which identifies the s
 - São Paulo accounted for approximately 41.98% of delivered orders and 37.42% of delivered-order payment value.
 - Most customers in the top-20 payment-value ranking generated their value from one high-value order rather than repeated purchases.
 
+## SQL Product Analysis
+
+Product performance is analyzed at the order-item level using delivered orders. Merchandise value represents item prices before freight, while freight share compares recorded freight value with the combined merchandise and freight amount.
+
+### Key Findings
+
+- Delivered orders contain 110,197 item rows across 96,478 orders and represent 32,216 distinct products.
+- Delivered merchandise value totals 13,221,498.11, with an additional 2,198,275.64 in recorded freight value.
+- `health_beauty` generated the highest merchandise value at 1,233,131.72.
+- `bed_bath_table` recorded the most delivered orders and item rows among the 15 leading categories, but its average item price was lower than several other leading categories.
+- `watches_gifts` generated the second-highest merchandise value and had the highest average item price among the leading 15 categories at 199.04.
+- `christmas_supplies` had the highest freight share among categories with at least 100 delivered item rows, at 26.75%, but its sales volume was relatively small.
+- `electronics` combined a high freight share of 22.76% with 2,729 delivered item rows.
+- `furniture_decor` and `housewares` combined substantial item volume with freight shares above 18%, making them more operationally significant than some smaller categories with higher percentages.
+- Freight value is a recorded customer-order amount and is not treated as the seller's actual logistics cost or as evidence of product profitability.
+
 ## Repository Structure
 
 ```text
@@ -118,7 +134,8 @@ ecommerce-data-analysis/
 └── sql/
     ├── 00_data_quality_checks.sql
     ├── 01_sales_overview.sql
-    └── 02_customer_analysis.sql
+    ├── 02_customer_analysis.sql
+    └── 03_product_analysis.sql
 ```
 
 ## Project Status
@@ -127,7 +144,8 @@ ecommerce-data-analysis/
 - [x] Complete the SQL data-quality checks
 - [x] Complete the SQL sales overview
 - [x] Complete customer analysis
-- [ ] Complete product and delivery analysis
+- [x] Complete product analysis
+- [ ] Complete delivery and review analysis
 - [ ] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
 - [ ] Add final business findings and recommendations
