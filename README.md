@@ -126,6 +126,20 @@ Product performance is analyzed at the order-item level using delivered orders. 
 - `furniture_decor` and `housewares` combined substantial item volume with freight shares above 18%, making them more operationally significant than some smaller categories with higher percentages.
 - Freight value is a recorded customer-order amount and is not treated as the seller's actual logistics cost or as evidence of product profitability.
 
+## SQL Delivery and Review Analysis
+
+Delivery performance is measured from purchase to customer receipt. An order is classified as on time when its actual delivery date is on or before its estimated delivery date. Review comparisons first aggregate the review table to one score per order.
+
+### Key Findings
+
+- Of 96,478 delivered orders, 96,470 have an actual customer delivery date. Their average delivery time was 12.09 days.
+- The longest recorded delivery time was 209 days. Several extreme records share the same delivery date and are retained with a caution that they may represent exceptional operations or later date entry.
+- A total of 89,936 delivered orders were on time and 6,534 were late, producing an on-time delivery rate of 93.23%.
+- Five-star reviews accounted for 57.78% of review records, while four- and five-star reviews together accounted for 77.07%.
+- Reviewed on-time orders had an average review score of 4.29, compared with 2.27 for reviewed late orders.
+- Average review scores fell to 2.72 for orders delayed by 1–7 days and approximately 1.6–1.7 for orders delayed by 8–30 days.
+- The relationship between late delivery and lower review scores is an association. Product quality, seller service, and other unobserved factors may also influence customer ratings.
+
 ## Repository Structure
 
 ```text
@@ -135,7 +149,8 @@ ecommerce-data-analysis/
     ├── 00_data_quality_checks.sql
     ├── 01_sales_overview.sql
     ├── 02_customer_analysis.sql
-    └── 03_product_analysis.sql
+    ├── 03_product_analysis.sql
+    └── 04_delivery_review_analysis.sql
 ```
 
 ## Project Status
@@ -145,7 +160,7 @@ ecommerce-data-analysis/
 - [x] Complete the SQL sales overview
 - [x] Complete customer analysis
 - [x] Complete product analysis
-- [ ] Complete delivery and review analysis
+- [x] Complete delivery and review analysis
 - [ ] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
 - [ ] Add final business findings and recommendations
