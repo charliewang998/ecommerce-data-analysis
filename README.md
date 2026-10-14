@@ -40,7 +40,7 @@ The observed order period is **2016-09-04 to 2018-10-17**. The first and last ca
 ## Tools
 
 - **MySQL / DBeaver:** data-quality checks and business analysis
-- **Python / Pandas:** planned exploratory analysis and validation
+- **Python / Pandas / Google Colab:** exploratory validation and visualization
 - **Power BI:** planned data model and interactive dashboard
 - **GitHub:** project documentation and reproducible analysis files
 
@@ -140,11 +140,24 @@ Delivery performance is measured from purchase to customer receipt. An order is 
 - Average review scores fell to 2.72 for orders delayed by 1–7 days and approximately 1.6–1.7 for orders delayed by 8–30 days.
 - The relationship between late delivery and lower review scores is an association. Product quality, seller service, and other unobserved factors may also influence customer ratings.
 
+## Python Exploratory Analysis
+
+The [Python notebook](python/01_olist_exploratory_analysis.ipynb) validates the main order counts against the SQL results and presents three focused visual analyses using Pandas, Matplotlib, and Seaborn.
+
+### Visual Findings
+
+- Monthly delivered-order volume increased substantially during 2017, peaked in November 2017, and remained at a higher level during 2018.
+- `health_beauty` generated the highest delivered merchandise value, followed by `watches_gifts` and `bed_bath_table`.
+- Reviewed on-time orders averaged 4.29 stars, compared with 2.27 for reviewed late orders.
+- The notebook uses straightforward filtering, merging, grouping, aggregation, and plotting so that each transformation remains easy to audit.
+
 ## Repository Structure
 
 ```text
 ecommerce-data-analysis/
 ├── README.md
+├── python/
+│   └── 01_olist_exploratory_analysis.ipynb
 └── sql/
     ├── 00_data_quality_checks.sql
     ├── 01_sales_overview.sql
@@ -161,6 +174,6 @@ ecommerce-data-analysis/
 - [x] Complete customer analysis
 - [x] Complete product analysis
 - [x] Complete delivery and review analysis
-- [ ] Perform Python exploratory analysis
+- [x] Perform Python exploratory analysis
 - [ ] Build the Power BI dashboard
 - [ ] Add final business findings and recommendations
