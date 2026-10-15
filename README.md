@@ -4,11 +4,17 @@
 
 This project analyzes the Brazilian E-Commerce Public Dataset provided by Olist. The dataset contains anonymized commercial order data from Brazilian marketplaces and covers orders recorded between September 2016 and October 2018.
 
-The project demonstrates an end-to-end junior data-analysis workflow using SQL, Python, and Power BI. The analysis begins with data-quality validation and then examines sales performance, customer behavior, product performance, delivery operations, and customer reviews.
+The project demonstrates an end-to-end junior data-analysis workflow using SQL, Python, and Tableau. The analysis begins with data-quality validation and then examines sales performance, customer behavior, product performance, delivery operations, and customer reviews. The final Tableau dashboard brings the main findings together in an interactive business summary.
+
+## Interactive Tableau Dashboard
+
+[View the interactive dashboard on Tableau Public](https://public.tableau.com/shared/63SF9K7W5?:display_count=n&:origin=viz_share_link)
+
+![Olist E-commerce Performance Dashboard](tableau/olist_ecommerce_dashboard.png)
 
 ## Business Questions
 
-The project will address the following questions:
+The project addresses the following questions:
 
 1. What are the main order and payment KPIs?
 2. How do order volume and recorded payment value change over time?
@@ -41,7 +47,7 @@ The observed order period is **2016-09-04 to 2018-10-17**. The first and last ca
 
 - **MySQL / DBeaver:** data-quality checks and business analysis
 - **Python / Pandas / Google Colab:** exploratory validation and visualization
-- **Power BI:** planned data model and interactive dashboard
+- **Tableau Public:** relational data model, calculated fields, KPI cards, and interactive dashboard
 - **GitHub:** project documentation and reproducible analysis files
 
 ## Data Quality Assessment
@@ -151,6 +157,29 @@ The [Python notebook](python/01_olist_exploratory_analysis.ipynb) validates the 
 - Reviewed on-time orders averaged 4.29 stars, compared with 2.27 for reviewed late orders.
 - The notebook uses straightforward filtering, merging, grouping, aggregation, and plotting so that each transformation remains easy to audit.
 
+## Tableau Dashboard
+
+The Tableau dashboard uses relationships between the order, customer, payment, order-item, product, category-translation, and cleaned review tables. Relationships preserve the tables' different levels of detail and reduce the risk of duplicating payment or item values during analysis.
+
+### Dashboard Highlights
+
+- 96,478 orders were delivered.
+- Delivered orders generated approximately R$15.42 million in recorded payment value.
+- Average payment value was R$159.86 per paid delivered order.
+- Monthly delivered-order volume increased substantially through 2017 and peaked in November 2017.
+- `health_beauty`, `watches_gifts`, and `bed_bath_table` were the leading categories by delivered merchandise value.
+- Reviewed on-time orders averaged 4.29 stars, compared with 2.27 for reviewed late orders.
+
+The dashboard contains KPI cards, an order-status distribution, a monthly delivered-order trend, a top-category comparison, and a delivery-status versus review-score comparison.
+
+## Business Recommendations
+
+1. **Prioritize delivery reliability.** Late deliveries were associated with substantially lower review scores. Operations teams should investigate the routes, sellers, and product groups contributing most frequently to delays.
+2. **Monitor freight-heavy, high-volume categories.** `furniture_decor`, `housewares`, and `office_furniture` combined meaningful order volume with relatively high freight shares and may offer opportunities for packaging or logistics improvements.
+3. **Develop customer-retention initiatives.** Only 3.00% of purchasing customers placed more than one delivered order. Post-purchase communication, targeted offers, and category-based recommendations may help encourage a second purchase.
+4. **Protect the strongest product categories.** `health_beauty`, `watches_gifts`, and `bed_bath_table` generated the highest delivered merchandise values and should receive close attention in inventory, seller-service, and delivery planning.
+5. **Treat associations cautiously.** The analysis identifies relationships in observational marketplace data; it does not establish that delivery performance or any other individual factor directly caused customer behavior.
+
 ## Repository Structure
 
 ```text
@@ -158,12 +187,16 @@ ecommerce-data-analysis/
 ├── README.md
 ├── python/
 │   └── 01_olist_exploratory_analysis.ipynb
-└── sql/
-    ├── 00_data_quality_checks.sql
-    ├── 01_sales_overview.sql
-    ├── 02_customer_analysis.sql
-    ├── 03_product_analysis.sql
-    └── 04_delivery_review_analysis.sql
+├── sql/
+│   ├── 00_data_quality_checks.sql
+│   ├── 01_sales_overview.sql
+│   ├── 02_customer_analysis.sql
+│   ├── 03_product_analysis.sql
+│   └── 04_delivery_review_analysis.sql
+└── tableau/
+    ├── Olist_Ecommerce_Dashboard.twb
+    ├── Olist_Ecommerce_Dashboard.twbx
+    └── olist_ecommerce_dashboard.png
 ```
 
 ## Project Status
@@ -175,5 +208,6 @@ ecommerce-data-analysis/
 - [x] Complete product analysis
 - [x] Complete delivery and review analysis
 - [x] Perform Python exploratory analysis
-- [ ] Build the Power BI dashboard
-- [ ] Add final business findings and recommendations
+- [x] Build the Tableau dashboard
+- [x] Add final business findings and recommendations
+- [x] Add the published Tableau Public URL to this README
